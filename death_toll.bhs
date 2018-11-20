@@ -1,0 +1,25 @@
+// Death Toll script for Rise of Nations: Extended Edition
+// By Frank Paschen
+// 11/20/2018
+
+scenario {
+  int total = 0;
+  static int DELAY = 120;
+  
+  run_once {
+    print_game_msg("DeathTollScript by Frank Paschen is running!");
+    set_timer("death_broadcast", DELAY);
+  }
+
+  trigger broadcast_death_toll(timer_expired("death_broadcast")) {
+    for (n = 1; num_units_lost(n) >= 0; n++) {
+	  total += num_units_lost(n);
+    }
+    print_game_msg("Current Global Death Toll: " + total);
+    set_timer("death_broadcast", DELAY);
+
+    enable_trigger("broadcast_death_toll");
+	
+	total = 0;
+  }
+}
